@@ -17,7 +17,10 @@ class User(Base):
     email = Column(String(250), nullable=False)
     phone = Column(String(250))
     gender = Column(String(250))
-    
+
+    def __repr__(self):
+        return '<User %r' % self.username
+       
 
 class Post(Base):
     __tablename__ = 'posts'
@@ -27,6 +30,9 @@ class Post(Base):
     users_id = Column(Integer, ForeignKey('users.id'))
     users = relationship(User)
 
+    def __repr__(self):
+        return '<Post %r' % self.title
+
 class Comment(Base):
     __tablename__ = 'comments'
     id = Column(Integer, primary_key=True)
@@ -35,6 +41,9 @@ class Comment(Base):
     posts_id = Column(Integer, ForeignKey('posts.id'))
     users = relationship(User)
     posts = relationship(Post)
+
+    def __repr__(self):
+        return '<Comment %r' % self.comment
     
 class Reaction(Base):
     __tablename__ = 'reactions'
@@ -45,6 +54,9 @@ class Reaction(Base):
     comment_id = Column(Integer, ForeignKey('comments.id'))
     posts = relationship(Post)
     comments = relationship(Comment)
+
+    def __repr__(self):
+        return '<Reaction %r' % self.id        
 
 class Media(Base):
     __tablename__ = 'medias'
@@ -61,7 +73,9 @@ class Follower(Base):
     user_to_id = Column(Integer, ForeignKey('users.id'))
     users_id = relationship(User)
     
-
+    def __repr__(self):
+        return '<Follower %r' % self.id
+    
     def to_dict(self):
         return {}
 
